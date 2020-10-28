@@ -29,7 +29,11 @@ class _LocationInputState extends State<LocationInput> {
       ),
     );
 
-    if (selectedLocation) {}
+    if (selectedLocation == null) {
+      return;
+    }
+
+    // ...
   }
 
   @override
