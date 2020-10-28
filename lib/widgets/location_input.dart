@@ -26,6 +26,7 @@ class _LocationInputState extends State<LocationInput> {
         builder: (ctx) => MapScreen(
           isSelecting: true,
         ),
+        fullscreenDialog: true,
       ),
     );
 
