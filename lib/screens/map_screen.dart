@@ -38,7 +38,8 @@ class _MapScreenState extends State<MapScreen> {
                 onPressed: _pickedLocation == null
                     ? null
                     : () {
-                        Navigator.of(context).pop(_pickedLocation);
+                        Navigator.of(context).pop(
+                            _pickedLocation); // A Stuurt _pickedLocation naar de vorige pagina (location_input) zodat die daar gebruikt kan worden
                       })
         ],
       ),
@@ -48,7 +49,9 @@ class _MapScreenState extends State<MapScreen> {
               widget.intitialLocation.longitude),
           zoom: 16,
         ),
-        onTap: widget.isSelecting ? _selectPlace : null,
+        onTap: widget.isSelecting
+            ? _selectPlace
+            : null, // B voert _selectPlace uit
         markers: _pickedLocation == null
             ? null
             : {
