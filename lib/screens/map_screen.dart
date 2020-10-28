@@ -52,10 +52,14 @@ class _MapScreenState extends State<MapScreen> {
         onTap: widget.isSelecting
             ? _selectPlace
             : null, // B voert _selectPlace uit
-        markers: _pickedLocation == null
+        markers: _pickedLocation == null && widget.isSelecting
             ? null
             : {
-                Marker(markerId: MarkerId('m1'), position: _pickedLocation),
+                Marker(
+                    markerId: MarkerId('m1'),
+                    position: _pickedLocation ??
+                        LatLng(widget.intitialLocation.latitude,
+                            widget.intitialLocation.longitude)),
               },
       ),
     );
