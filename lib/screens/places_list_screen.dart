@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/great_places.dart';
+import '../providers/great_places.dart';
 import './add_place_screen.dart';
 
 class PlacesListScreen extends StatelessWidget {
@@ -19,27 +20,36 @@ class PlacesListScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Consumer<GreatPlaces>(
-        child: Center(
-          child: const Text('Please add places to see them here.'),
-        ),
-        builder:
-            (context, greatPlaces, ch) => // de builder pakt de child hierboven
-                greatPlaces.items.length <= 0
-                    ? ch
-                    : ListView.builder(
-                        itemCount: greatPlaces.items.length,
-                        itemBuilder: (context, index) => ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage:
-                                FileImage(greatPlaces.items[index].image),
+      body: FutureBuilder(
+        future: Provider.of<GreatPlaces>(context, listen: false)
+            .fetchAndSetPlaces(),
+        builder: (context, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<GreatPlaces>(
+                child: Center(
+                  child: const Text('Please add places to see them here.'),
+                ),
+                builder: (context, greatPlaces,
+                        ch) => // de builder pakt de child hierboven
+                    greatPlaces.items.length <= 0
+                        ? ch
+                        : ListView.builder(
+                            itemCount: greatPlaces.items.length,
+                            itemBuilder: (context, index) => ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    FileImage(greatPlaces.items[index].image),
+                              ),
+                              title: Text(greatPlaces.items[index].title),
+                              onTap: () {
+                                // to to detail screen
+                              },
+                            ),
                           ),
-                          title: Text(greatPlaces.items[index].title),
-                          onTap: () {
-                            // to to detail screen
-                          },
-                        ),
-                      ),
+              ),
       ),
     );
   }
